@@ -5,13 +5,13 @@
     "clean": "lerna exec -- npm run clean"
   },
   "devDependencies": {
-    "@commonly-buildtools/build": "^0.4.0-next.x",
-    "@commonly-buildtools/clean": "^0.4.0-next.x",
-    "@commonly-buildtools/configuration": "^0.4.0-next.x",
-    "@commonly-buildtools/monorepo": "^0.4.0-next.x",
-    "@commonly-buildtools/publish": "^0.4.0-next.x",
-    "@commonly-buildtools/version": "^0.4.0-next.x",
-    "@commonly-buildtools/test": "^0.4.0-next.x"
+    "@commonly-buildtools/build": "0.4.26-next.0",
+    "@commonly-buildtools/clean": "0.4.26-next.0",
+    "@commonly-buildtools/configuration": "0.4.26-next.0",
+    "@commonly-buildtools/monorepo": "0.4.26-next.0",
+    "@commonly-buildtools/publish": "0.4.26-next.0",
+    "@commonly-buildtools/version": "0.4.26-next.0",
+    "@commonly-buildtools/test": "0.4.26-next.0"
   },
   "repository": "https://github.com/commonlyjs/commonly-buildtools"
 }
