@@ -1,0 +1,36 @@
+language: node_js
+node_js:
+  - "lts/*"
+cache:
+  npm: false
+install:
+  - npm install
+
+branches:
+  only:
+    - stable
+    - master
+
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - npm run build
+    - stage: version
+      script:
+        - bash node_modules/@commonly-buildtools/configuration/ci/enable-git-pushback.sh
+        - npx cmnyversion
+    - stage: release
+      script:
+        - bash node_modules/@commonly-buildtools/configuration/ci/enable-git-pushback.sh
+        - bash node_modules/@commonly-buildtools/configuration/ci/enable-npm-publish.sh
+        - npx cmnypublish
+
+stages:
+  - name: build
+  - name: version
+    if: branch = master AND type = push AND commit_message =~ ^feat|fix
+  - name: release
+    if: commit_message =~ ^v([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})(-next.\d)?$
+
