@@ -19,11 +19,21 @@ jobs:
         - npm run build
     - stage: version
       script:
-        - bash node_modules/@commonly-buildtools/configuration/ci/enable-git-pushback.sh
+        - git remote rm origin
+        - git remote add origin https://commonlyjs:${GH_TOKEN}@github.com/commonlyjs/commonly-buildtools.git
+        - git config --global user.name "commonly buildbot"
+        - git config --global user.email "build@commonlyjs.com"
+        - git fetch
+        - git checkout master
         - npx cmnyversion
     - stage: release
       script:
-        - bash node_modules/@commonly-buildtools/configuration/ci/enable-git-pushback.sh
+        - git remote rm origin
+        - git remote add origin https://commonlyjs:${GH_TOKEN}@github.com/commonlyjs/commonly-buildtools.git
+        - git config --global user.name "commonly buildbot"
+        - git config --global user.email "build@commonlyjs.com"
+        - git fetch
+        - git checkout master
         - bash node_modules/@commonly-buildtools/configuration/ci/enable-npm-publish.sh
         - npx cmnypublish
 
