@@ -4,8 +4,20 @@ const child_process = require("child_process")
 
 
 
-const packages = fs.readdirSync("./packages")
+child_process.spawnSync(
+    "npm",
+    [
+        "run", "build"
+    ],
+    {
+        cwd: process.cwd(),
+        shell: true,
+        stdio: "inherit"
+    }
+)
 
+
+const packages = fs.readdirSync("./packages")
 for (const pkg of packages) {
     child_process.spawnSync(
         "npm",
