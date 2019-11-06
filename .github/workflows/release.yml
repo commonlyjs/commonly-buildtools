@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the ${{ REPOSITORY }} repository
+      - name: Checkout the repository
         uses: actions/checkout@v1
       - name: Install Node.js
         uses: actions/setup-node@v1
