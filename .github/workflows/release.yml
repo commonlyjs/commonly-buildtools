@@ -32,12 +32,13 @@ jobs:
       - name: Checkout directly to branch
         run: |
           git checkout master
+          git reset --hard
       - name: Version
         run: |
           npm run version --if-present
       - name: Push modified files to the repository
         run: |
-          git push https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${REPOSITORY}.git HEAD:${GITHUB_REF} --follow-tags
+          git push "https://${{github.actor}}:${GITHUB_TOKEN}@github.com/${{github.repository}}.git HEAD:${{github.ref}}" --follow-tags
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish to npm artifactory
