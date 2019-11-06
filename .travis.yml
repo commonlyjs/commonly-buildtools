@@ -5,6 +5,7 @@ cache:
   npm: false
 install:
   - npm install
+  - node link.js
 
 branches:
   only:
@@ -34,7 +35,7 @@ jobs:
         - git config --global user.email "build@commonlyjs.com"
         - git fetch
         - git checkout master
-        - bash node_modules/@commonly-buildtools/configuration/ci/enable-npm-publish.sh
+        - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc
         - npx cmnypublish
 
 stages:
