@@ -2,8 +2,8 @@
   "name": "@commonly-buildtools/build",
   "version": "0.5.1-next.4",
   "scripts": {
-    "build": "npm run clean && npx cmnybuild",
-    "clean": "npx cmnyclean",
+    "build": "npm run clean && cmnybuild",
+    "clean": "cmnyclean",
     "prepack": "npm run build"
   },
   "main": "./lib/index.js",
@@ -38,5 +38,5 @@
     "build tools",
     "build"
   ],
-  "gitHead": "b66d7b8c486fd066331f64c1f516366a5c8fd4c7"
+  "gitHead": "8451eae2d5b6a8d3ce85ed576c5e64f8947cbb09"
 }
