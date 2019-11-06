@@ -3,7 +3,7 @@ const npmrunpath = require("npm-run-path")
 
 
 
-const { CI = "", TRAVIS_BRANCH = "" } = process.env
+const { CI = "", GITHUB_REF = "" } = process.env
 
 spawnSync(
     "lerna",
@@ -19,14 +19,14 @@ spawnSync(
                 [],
 
         ...
-            /^master$/.test(TRAVIS_BRANCH)
+            /^master$/.test(GITHUB_REF)
                 ? [
                     "--conventional-prerelease",
                     "--preid", "next",
                     "--no-changelog"
                 ]
                 :
-            /^stable$/.test(TRAVIS_BRANCH)
+            /^stable$/.test(GITHUB_REF)
                 ? [ "--conventional-graduate" ]
                 :
             [],
