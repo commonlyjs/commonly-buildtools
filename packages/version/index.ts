@@ -9,6 +9,7 @@ spawnSync(
     "lerna",
     [
         "version",
+        "--no-push",
         "--conventional-commits",
 
         ...
@@ -19,7 +20,11 @@ spawnSync(
 
         ...
             /^master$/.test(TRAVIS_BRANCH)
-                ? [ "--conventional-prerelease", "--preid", "next" ]
+                ? [
+                    "--conventional-prerelease",
+                    "--preid", "next",
+                    "--no-changelog"
+                ]
                 :
             /^stable$/.test(TRAVIS_BRANCH)
                 ? [ "--conventional-graduate" ]

@@ -27,6 +27,7 @@ jobs:
         - git fetch
         - git checkout master
         - npx cmnyversion
+        - git push origin $TRAVIS_BRANCH
     - stage: release
       script:
         - git remote rm origin
