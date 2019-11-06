@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "postinstall": "cmnymonorepo && node link.js",
+    "postinstall": "cmnymonorepo",
     "build": "lerna exec -- npm run build",
     "clean": "lerna exec -- npm run clean",
     "version": "node node_modules/@commonly-buildtools/version",
