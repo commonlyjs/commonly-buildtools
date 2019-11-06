@@ -1,0 +1,43 @@
+{
+  "name": "@commonly-buildtools/test",
+  "version": "0.4.26-next.0",
+  "scripts": {
+    "build": "npm run clean && cmnybuild",
+    "clean": "cmnyclean",
+    "prepack": "npm run build"
+  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "bin": {
+    "cmnytest": "./bin/run"
+  },
+  "dependencies": {
+    "@types/jest": "24.0.20",
+    "@types/jest-plugin-context": "2.9.2",
+    "jest": "24.9.0",
+    "jest-plugin-context": "2.9.0",
+    "ts-jest": "24.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "CHANGELOG.md",
+    "lib/",
+    "bin/"
+  ],
+  "author": "Mateusz Pietrzak",
+  "homepage": "https://github.com/commonlyjs/commonly-buildtools",
+  "repository": "https://github.com/commonlyjs/commonly-buildtools",
+  "bugs": "https://github.com/commonlyjs/commonly-buildtools/issues",
+  "license": "MIT",
+  "keywords": [
+    "internal",
+    "commonly",
+    "build tools",
+    "test"
+  ],
+  "gitHead": "b66d7b8c486fd066331f64c1f516366a5c8fd4c7"
+}
