@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+
+    "declaration": true,
+    "declarationMap": true,
+
+    "composite": true,
+    "incremental": true,
+    "noEmitOnError": true,
+
+    "importHelpers": true,
+    "downlevelIteration": true,
+
+    "newLine": "lf",
+    "strict": true,
+
+    "lib": [
+      "es2016"
+    ]
+  },
+
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
