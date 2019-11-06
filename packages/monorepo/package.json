@@ -1,6 +1,6 @@
 {
   "name": "@commonly-buildtools/monorepo",
-  "version": "0.5.1-next.3",
+  "version": "0.5.1-next.4",
   "scripts": {
     "build": "npm run clean && npx cmnybuild",
     "clean": "npx cmnyclean",
