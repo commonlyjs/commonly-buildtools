@@ -25,6 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
+          npx lerna bootstrap
       - name: Configure Git machine user
         run: |
           git config --global user.name "commonly buildbot"
