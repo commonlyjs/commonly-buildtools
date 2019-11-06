@@ -1,0 +1,39 @@
+{
+  "name": "@commonly-buildtools/publish",
+  "version": "0.4.26-next.0",
+  "scripts": {
+    "build": "npm run clean && cmnybuild",
+    "clean": "cmnyclean",
+    "prepack": "npm run build"
+  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "bin": {
+    "cmnypublish": "./bin/run"
+  },
+  "dependencies": {
+    "lerna": "3.18.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "CHANGELOG.md",
+    "lib/",
+    "bin/"
+  ],
+  "author": "Mateusz Pietrzak",
+  "homepage": "https://github.com/commonlyjs/commonly-buildtools",
+  "repository": "https://github.com/commonlyjs/commonly-buildtools",
+  "bugs": "https://github.com/commonlyjs/commonly-buildtools/issues",
+  "license": "MIT",
+  "keywords": [
+    "internal",
+    "commonly",
+    "build tools",
+    "publish"
+  ],
+  "gitHead": "b66d7b8c486fd066331f64c1f516366a5c8fd4c7"
+}

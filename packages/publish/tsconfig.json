@@ -1,0 +1,6 @@
+{
+  "extends": "@commonly-buildtools/configuration/typescript",
+  "compilerOptions": {
+    "outDir": "lib"
+  }
+}
