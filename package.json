@@ -1,8 +1,10 @@
 {
   "scripts": {
-    "postinstall": "cmnymonorepo",
+    "postinstall": "cmnymonorepo && node link.js",
     "build": "lerna exec -- npm run build",
-    "clean": "lerna exec -- npm run clean"
+    "clean": "lerna exec -- npm run clean",
+    "version": "npx cmnyversion",
+    "publish": "npx cmnyversion"
   },
   "devDependencies": {
     "@commonly-buildtools/build": "0.4.26-next.0",
