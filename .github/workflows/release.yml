@@ -12,6 +12,10 @@ jobs:
   release:
     runs-on: ubuntu-latest
 
+    env:
+      CI: true
+      TRAVIS_BRANCH: master
+
     steps:
       - name: Clone repository
         uses: actions/checkout@v1
@@ -36,9 +40,6 @@ jobs:
       - name: Version
         run: |
           npm run version --if-present
-        env:
-          CI: true
-          TRAVIS_BRANCH: master
       - name: Push modified files to the repository
         run: |
           git push "https://${{github.actor}}:${GITHUB_TOKEN}@github.com/${{github.repository}}.git" HEAD:${{github.ref}} --follow-tags
@@ -47,6 +48,3 @@ jobs:
       - name: Publish to npm artifactory
         run: |
           npm run publish --if-present
-        env:
-          CI: true
-          TRAVIS_BRANCH: master
