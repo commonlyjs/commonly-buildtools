@@ -37,7 +37,7 @@ jobs:
           npm run version --if-present
       - name: Push modified files to the repository
         run: |
-          git push https://${{ GITHUB_ACTOR }}:${{ GITHUB_TOKEN }}@github.com/${{ REPOSITORY }}.git HEAD:${{ GITHUB_REF }} --follow-tags
+          git push https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${REPOSITORY}.git HEAD:${GITHUB_REF} --follow-tags
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish to npm artifactory
