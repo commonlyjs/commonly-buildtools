@@ -13,8 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - name: Checkout the ${{ REPOSITORY }} repository
+        uses: actions/checkout@v1
+      - name: Install Node.js
+        uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
@@ -29,7 +31,7 @@ jobs:
           git config --global user.email "build@commonlyjs.com"
       - name: Version
         run: |
-          npm run version
+          npm run version --if-present
       - name: Push modified files to the repository
         run: |
           git push https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${REPOSITORY}.git HEAD:${GITHUB_REF} --follow-tags
@@ -37,4 +39,4 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish to npm artifactory
         run: |
-          npm run publish
+          npm run publish --if-present
