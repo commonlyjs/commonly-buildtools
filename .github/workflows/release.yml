@@ -37,8 +37,8 @@ jobs:
         run: |
           npm run version --if-present
         env:
-          - CI: true
-          - TRAVIS_BRANCH: master
+          CI: true
+          TRAVIS_BRANCH: master
       - name: Push modified files to the repository
         run: |
           git push "https://${{github.actor}}:${GITHUB_TOKEN}@github.com/${{github.repository}}.git" HEAD:${{github.ref}} --follow-tags
@@ -48,5 +48,5 @@ jobs:
         run: |
           npm run publish --if-present
         env:
-          - CI: true
-          - TRAVIS_BRANCH: master
+          CI: true
+          TRAVIS_BRANCH: master
