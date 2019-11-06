@@ -2,8 +2,8 @@
   "name": "@commonly-buildtools/monorepo",
   "version": "0.5.1-next.2",
   "scripts": {
-    "build": "npm run clean && cmnybuild",
-    "clean": "cmnyclean",
+    "build": "npm run clean && npx cmnybuild",
+    "clean": "npx cmnyclean",
     "prepack": "npm run build"
   },
   "main": "./lib/index.js",
