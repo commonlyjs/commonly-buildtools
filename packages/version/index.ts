@@ -1,5 +1,5 @@
 import { spawnSync } from "child_process"
-import npmrunpath from "npm-run-path"
+const npmrunpath = require("npm-run-path")
 
 
 
