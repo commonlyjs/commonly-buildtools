@@ -30,8 +30,8 @@ jobs:
           git config --global user.name "commonly buildbot"
           git config --global user.email "build@commonlyjs.com"
       - name: D
-          run: |
-            git checkout -
+        run: |
+          git checkout -
       - name: Version
         run: |
           npm run version --if-present
