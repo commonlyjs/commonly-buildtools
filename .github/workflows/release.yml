@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-        - CI: true
-        - TRAVIS_BRANCH: master
+      - CI: true
+      - TRAVIS_BRANCH: master
 
     steps:
       - name: Clone repository
