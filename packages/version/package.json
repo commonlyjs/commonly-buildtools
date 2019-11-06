@@ -1,6 +1,6 @@
 {
   "name": "@commonly-buildtools/version",
-  "version": "0.5.1-next.2",
+  "version": "0.5.1-next.3",
   "scripts": {
     "build": "npm run clean && npx cmnybuild",
     "clean": "npx cmnyclean",
