@@ -24,8 +24,6 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Install dependencies
         run: |
           npm install
@@ -42,9 +40,9 @@ jobs:
           npm run version --if-present
       - name: Push modified files to the repository
         run: |
-          git push "https://${{github.actor}}:${GITHUB_TOKEN}@github.com/${{github.repository}}.git" HEAD:${{github.ref}} --follow-tags
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          git push "https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git" HEAD:${{github.ref}} --follow-tags
       - name: Publish to npm artifactory
         run: |
           npm run publish --if-present
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
