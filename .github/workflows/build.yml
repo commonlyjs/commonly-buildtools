@@ -1,9 +1,9 @@
 name: build
 
 on:
-  pull_request:
+  - pull_request:
     types: [opened, synchronize, reopened]
-  branches:
+  - branches:
     - master
     - staging
     - stable
