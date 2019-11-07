@@ -11,6 +11,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [0.5.5](https://github.com/commonlyjs/commonly-buildtools/compare/v0.5.5-next.1...v0.5.5) (2019-11-07)
+
+**Note:** Version bump only for package commonly-buildtools
+
+
+
+
+
+## [0.5.5-next.2](https://github.com/commonlyjs/commonly-buildtools/compare/v0.5.5-next.1...v0.5.5-next.2) (2019-11-07)
+
+**Note:** Version bump only for package commonly-buildtools
+
+
+
+
+
 ## [0.5.5-next.1](https://github.com/commonlyjs/commonly-buildtools/compare/v0.5.1-next.4...v0.5.5-next.1) (2019-11-06)
 
 **Note:** Version bump only for package commonly-buildtools
