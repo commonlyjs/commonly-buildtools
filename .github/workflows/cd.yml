@@ -48,7 +48,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Synchronize branches
-        if: contains(${{github.ref}}, "stable")
+        if: contains(github.ref, "stable")
         run: |
           git checkout master
           git rebase origin/stable
