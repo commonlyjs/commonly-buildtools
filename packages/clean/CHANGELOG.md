@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.11](https://github.com/commonlyjs/commonly-buildtools/compare/v0.5.10...v0.5.11) (2019-11-07)
+
+
+
+## [0.5.9-next.2](https://github.com/commonlyjs/commonly-buildtools/compare/v0.5.9-next.1...v0.5.9-next.2) (2019-11-07)
+
+
+
+## [0.5.9-next.1](https://github.com/commonlyjs/commonly-buildtools/compare/v0.5.9-next.0...v0.5.9-next.1) (2019-11-07)
+
+
+
+## [0.5.9-next.0](https://github.com/commonlyjs/commonly-buildtools/compare/v0.5.9...v0.5.9-next.0) (2019-11-07)
+
+**Note:** Version bump only for package @commonly-buildtools/clean
+
+
+
+
+
 ## [0.5.9](https://github.com/commonlyjs/commonly-buildtools/compare/v0.5.5-next.1...v0.5.9) (2019-11-07)
 
 **Note:** Version bump only for package @commonly-buildtools/clean
