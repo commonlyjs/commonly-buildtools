@@ -33,7 +33,7 @@ jobs:
           git config --global user.email "build@commonlyjs.com"
       - name: Checkout directly to branch
         run: |
-          git checkout master
+          git checkout HEAD:${{github.ref}}
           git reset --hard
       - name: Version
         run: |
