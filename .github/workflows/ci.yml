@@ -10,14 +10,12 @@ on:
 
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-
-    env:
-      CI: true
+  build:
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
         node-version: [12.x, 13.x]
 
     steps:
@@ -30,50 +28,12 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-      - name: Build
+      - name: Lint
         run: |
           npm run lint --if-present
-
-
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 13.x]
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v1
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: |
-          npm install
       - name: Build
         run: |
-          npm run build --if-present
-
-
-  test:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 13.x]
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v1
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: |
-          npm install
-      - name: Build
+          npm run build --if-present -- --no-emit
+      - name: Test
         run: |
           npm run test --if-present
