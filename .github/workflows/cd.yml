@@ -1,5 +1,6 @@
 name: CD
 
+
 on:
   push:
     branches:
@@ -8,8 +9,8 @@ on:
       - stable
 
 
-jobs:
 
+jobs:
   release:
     runs-on: ubuntu-latest
 
@@ -46,3 +47,9 @@ jobs:
           npm run publish --if-present
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Synchronize branches
+        if: contains(${{github.ref}}, "stable")
+        run: |
+          git checkout master
+          git rebase origin/stable
+          git push "https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git" HEAD:ref/head/master
