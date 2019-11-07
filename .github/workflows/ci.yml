@@ -8,10 +8,13 @@ on:
       - v*
 
 
-jobs:
 
+jobs:
   lint:
     runs-on: ubuntu-latest
+
+    env:
+      CI: true
 
     strategy:
       matrix:
@@ -30,6 +33,7 @@ jobs:
       - name: Build
         run: |
           npm run lint --if-present
+
 
   build:
     runs-on: ubuntu-latest
@@ -51,6 +55,7 @@ jobs:
       - name: Build
         run: |
           npm run build --if-present
+
 
   test:
     runs-on: ubuntu-latest

@@ -17,10 +17,10 @@ spawnSync(
             [],
 
         ...
-            /^master$/.test(GITHUB_REF)
+            /master$/.test(GITHUB_REF)
                 ? [ "--dist-tag", "next" ]
                 :
-            /^stable$/.test(GITHUB_REF)
+            /stable$/.test(GITHUB_REF)
                 ? [ "--dist-tag", "latest" ]
                 :
             [],
