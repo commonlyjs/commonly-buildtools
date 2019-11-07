@@ -1,6 +1,6 @@
 {
   "name": "@commonly-buildtools/configuration",
-  "version": "0.5.12-next.0",
+  "version": "0.5.12",
   "scripts": {
     "build": "echo \"noop\"",
     "clean": "echo \"noop\"",
