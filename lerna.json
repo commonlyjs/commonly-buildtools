@@ -3,6 +3,12 @@
   "packages": [
     "packages/*"
   ],
+  "command": {
+    "version": {
+      "allowBranch": ["master", "stable"],
+      "message": "chore(release): %s"
+    }
+  },
   "ignoreChanges": [
     "**/*.md",
     "**/*.spec.*"
