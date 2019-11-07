@@ -19,14 +19,14 @@ spawnSync(
                 [],
 
         ...
-            /^master$/.test(GITHUB_REF)
+            /master$/.test(GITHUB_REF)
                 ? [
                     "--conventional-prerelease",
                     "--preid", "next",
                     "--no-changelog"
                 ]
                 :
-            /^stable$/.test(GITHUB_REF)
+            /stable$/.test(GITHUB_REF)
                 ? [ "--conventional-graduate" ]
                 :
             [],
