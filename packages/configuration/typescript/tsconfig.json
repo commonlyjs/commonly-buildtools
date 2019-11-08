@@ -15,7 +15,10 @@
     "downlevelIteration": true,
 
     "newLine": "lf",
+
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
 
     "lib": [
       "es2016"
