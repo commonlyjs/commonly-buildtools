@@ -90,22 +90,30 @@ const walk3 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
 
 const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
     const member: any = {
+        name: null,
+        since: null,
         remarks: [],
         signature: {
             parameters: [],
             typeparameters: [],
-            returnValue: {}
+            returnValue: {
+                type: null,
+                description: null
+            }
         },
         examples: [],
+        metadata: {
+            source: null,
+            specification: null
+        },
     }
-    const dictionary = []
+    // const dictionary = []
 
     switch (node.kind) {
         case SyntaxKind.VariableDeclaration: {
             const thisNode = node as VariableDeclaration
-            dictionary.push({ name: "name", value: thisNode.name.getText() || null })
-            dictionary.push({ name: "description", value: symbol.getDocumentationComment(checker)[0].text || null })
-
+            member.name = thisNode.name.getText()
+            member.description = symbol.getDocumentationComment(checker)[0].text
 
             if (thisNode.initializer && thisNode.initializer.kind === SyntaxKind.ArrowFunction) {
                 const thatNode: ArrowFunction = thisNode.initializer as ArrowFunction
@@ -189,7 +197,7 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
                         parameter.description = description
                         break
                     }
-                    case "return":
+                    case "returns":
                         // dictionary.push({ name: "signature.returnValue.description", value: jsDocTag.text || null })
                         member.signature.returnValue.description = jsDocTag.text || null
                         break
