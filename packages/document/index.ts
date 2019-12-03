@@ -114,9 +114,12 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
             const thisNode = node as VariableDeclaration
             member.name = thisNode.name.getText()
             member.description = symbol.getDocumentationComment(checker)[0].text
+                .replace("\r\n", " ")
+                .replace("  ", "\r")
 
             if (thisNode.initializer && thisNode.initializer.kind === SyntaxKind.ArrowFunction) {
                 const thatNode: ArrowFunction = thisNode.initializer as ArrowFunction
+                // console.log(thatNode)
                 if (thatNode.type) {
                     const typeNode = thatNode.type as any
                     switch (thatNode.type.kind) {
@@ -160,6 +163,7 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
                 }
 
                 for (const parameter of thatNode.parameters) {
+                    // console.log(parameter)
                     const _parameter: any = {
                         name: parameter.name.getText()
                     }
@@ -167,12 +171,43 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
                     if (parameter.type) {
                         // console.log(((parameter.type) as any).typeName)
                         // console.log(parameter.initializer)
-                        if ((parameter.type as any).typeName) {
-                            _parameter.type = ((parameter.type as any).typeName as any).escapedText
-                            if ((parameter.type as any).typeArguments) {
-                                // console.log((parameter.type as any).typeArguments)
-                                _parameter.type += `<${(parameter.type as any).typeArguments.map((x: any) => x.typeName.escapedText).join(", ")}>`
-                            }
+                        // if ((parameter.type as any).typeName) {
+                        //     _parameter.type = ((parameter.type as any).typeName as any).escapedText
+                        //     if ((parameter.type as any).typeArguments) {
+                        //         // console.log((parameter.type as any).typeArguments)
+                        //         _parameter.type += `<${(parameter.type as any).typeArguments.map((x: any) => x.typeName.escapedText).join(", ")}>`
+                        //     }
+                        // }
+                        // const typeNode1 = thatNode.type as any
+                        // console.log(parameter.type.kind, typeNode1.kind)
+                        switch (parameter.type.kind) {
+                            case SyntaxKind.TypeReference:
+                                _parameter.type = (parameter.type as any).typeName.escapedText
+                                break
+                            case SyntaxKind.BooleanKeyword:
+                            case SyntaxKind.TypePredicate:
+                                _parameter.type = "boolean"
+                                break
+                            case SyntaxKind.NumberKeyword:
+                                _parameter.type = "number"
+                                break
+                            case SyntaxKind.UndefinedKeyword:
+                                _parameter.type = "undefined"
+                                break
+                            case SyntaxKind.NullKeyword:
+                                _parameter.type = "null"
+                                break
+                            case SyntaxKind.StringKeyword:
+                                _parameter.type = "string"
+                                break
+                            case SyntaxKind.SymbolKeyword:
+                                _parameter.type = "symbol"
+                                break
+                            case SyntaxKind.UnionType:
+                                _parameter.type = (parameter.type as any).types.map(mapType).join(" | ")
+                                break
+                            default:
+                                break
                         }
                     }
                     if (parameter.initializer) {
@@ -241,10 +276,34 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
             break
     }
 
-
-
     return member
 }
+
+
+const mapType = (node: any) => {
+    switch (node.kind) {
+        case SyntaxKind.TypeReference:
+            return node.typeName.escapedText
+        case SyntaxKind.BooleanKeyword:
+        case SyntaxKind.TypePredicate:
+            return "boolean"
+        case SyntaxKind.NumberKeyword:
+            return "number"
+        case SyntaxKind.UndefinedKeyword:
+            return "undefined"
+        case SyntaxKind.NullKeyword:
+            return "null"
+        case SyntaxKind.StringKeyword:
+            return "string"
+        case SyntaxKind.SymbolKeyword:
+            return "symbol"
+        case SyntaxKind.UnknownKeyword:
+            return "unknown"
+        default:
+            return ""
+    }
+}
+
 
 const [ outDir = "" ] = process.argv.slice(2)
 if (configPath) {
