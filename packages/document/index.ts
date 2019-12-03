@@ -117,16 +117,34 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
 
             if (thisNode.initializer && thisNode.initializer.kind === SyntaxKind.ArrowFunction) {
                 const thatNode: ArrowFunction = thisNode.initializer as ArrowFunction
-                // console.log(thatNode)
-
                 if (thatNode.type) {
-                    if (thatNode.type.kind === SyntaxKind.TypeReference) {
-                        const typeNode = thatNode.type as any
-                        member.signature.returnValue.type = typeNode.typeName.escapedText
+                    const typeNode = thatNode.type as any
+                    switch (thatNode.type.kind) {
+                        case SyntaxKind.TypeReference:
+                            member.signature.returnValue.type = typeNode.typeName.escapedText
+                            break
+                        case SyntaxKind.BooleanKeyword:
+                        case SyntaxKind.TypePredicate:
+                            member.signature.returnValue.type = "boolean"
+                            break
+                        case SyntaxKind.NumberKeyword:
+                            member.signature.returnValue.type = "number"
+                            break
+                        case SyntaxKind.UndefinedKeyword:
+                            member.signature.returnValue.type = "undefined"
+                            break
+                        case SyntaxKind.NullKeyword:
+                            member.signature.returnValue.type = "null"
+                            break
+                        case SyntaxKind.StringKeyword:
+                            member.signature.returnValue.type = "string"
+                            break
+                        case SyntaxKind.SymbolKeyword:
+                            member.signature.returnValue.type = "symbol"
+                            break
+                        default:
+                            break
                     }
-                    // member.signature.returnValue = {
-                    //     type: 0
-                    // }
                 }
 
                 if (thatNode.typeParameters) {
@@ -177,7 +195,7 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
                         break
                     case "example":
                         // dictionary.push({ name: "example", value: jsDocTag.text ? `${jsDocTag.text}@commonly` : null })
-                        member.examples.push(jsDocTag.text ? `${jsDocTag.text}@commonly`.slice(5) : null)
+                        member.examples.push(jsDocTag.text ? `${jsDocTag.text}@commonly`.slice(4) : null)
                         break
                     case "commonly": {
                         // const example = dictionary[dictionary.length - 1]
