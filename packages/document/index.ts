@@ -183,6 +183,9 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
                         switch (parameter.type.kind) {
                             case SyntaxKind.TypeReference:
                                 _parameter.type = (parameter.type as any).typeName.escapedText
+                                if (!_parameter.type) {
+                                    _parameter.type = `${(parameter.type as any).typeName.left.escapedText}.${(parameter.type as any).typeName.right.escapedText}`
+                                }
                                 break
                             case SyntaxKind.BooleanKeyword:
                             case SyntaxKind.TypePredicate:
