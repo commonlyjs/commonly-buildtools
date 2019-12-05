@@ -331,7 +331,7 @@ if (configPath) {
                 symbol.exports.forEach(exported => {
                     if (exported.flags & SymbolFlags.Alias) {
                         const aliasedSymbol = checker.getAliasedSymbol(exported)
-                        console.log(aliasedSymbol)
+                        // console.log(aliasedSymbol)
                         const node = aliasedSymbol.valueDeclaration || aliasedSymbol.declarations[0]
 
                         members.push(walk2(checker, node, aliasedSymbol))
