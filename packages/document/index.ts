@@ -125,6 +125,9 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
                     switch (thatNode.type.kind) {
                         case SyntaxKind.TypeReference:
                             member.signature.returnValue.type = typeNode.typeName.escapedText
+                            if (!member.signature.returnValue.type) {
+                                member.signature.returnValue.type = `${typeNode.typeName.left.escapedText}.${typeNode.typeName.right.escapedText}`
+                            }
                             break
                         case SyntaxKind.BooleanKeyword:
                         case SyntaxKind.TypePredicate:
@@ -328,7 +331,8 @@ if (configPath) {
                 symbol.exports.forEach(exported => {
                     if (exported.flags & SymbolFlags.Alias) {
                         const aliasedSymbol = checker.getAliasedSymbol(exported)
-                        const node = aliasedSymbol.valueDeclaration
+                        console.log(aliasedSymbol)
+                        const node = aliasedSymbol.valueDeclaration || aliasedSymbol.declarations[0]
 
                         members.push(walk2(checker, node, aliasedSymbol))
 
