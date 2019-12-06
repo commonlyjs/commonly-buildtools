@@ -1,6 +1,5 @@
-import { Profiler } from "inspector"
-import * as path from "path"
 import * as fs from "fs"
+import * as path from "path"
 import {
     ArrowFunction,
     createProgram,
@@ -13,7 +12,7 @@ import {
     SymbolFlags,
     SyntaxKind,
     sys,
-    TypeChecker, TypeReference,
+    TypeChecker,
     VariableDeclaration
 } from "typescript"
 
@@ -89,6 +88,7 @@ const walk3 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
 }
 
 const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
+    // console.log(node)
     const member: any = {
         name: null,
         since: null,
@@ -110,6 +110,7 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
     // const dictionary = []
 
     switch (node.kind) {
+        case SyntaxKind.TypeAliasDeclaration:
         case SyntaxKind.VariableDeclaration: {
             const thisNode = node as VariableDeclaration
             member.name = thisNode.name.getText()
@@ -168,7 +169,10 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
                 for (const parameter of thatNode.parameters) {
                     // console.log(parameter)
                     const _parameter: any = {
-                        name: parameter.name.getText()
+                        name: parameter.name.getText(),
+                        variadic: !!parameter.dotDotDotToken,
+                        defaultValue: !!parameter.initializer ? mapType(parameter.initializer) : null,
+                        optional: !!parameter.questionToken
                     }
 
                     if (parameter.type) {
@@ -212,12 +216,19 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
                             case SyntaxKind.UnionType:
                                 _parameter.type = (parameter.type as any).types.map(mapType).join(" | ")
                                 break
+                            case SyntaxKind.FunctionType:
+                                // console.log(parameter.type)
+                                break
                             default:
+                                _parameter.type = mapType(parameter.type)
+                                // console.log(parameter.type)
                                 break
                         }
                     }
                     if (parameter.initializer) {
-                        _parameter.defaultValue = (parameter.initializer as any).text
+                        if (!_parameter.defaultValue) {
+                            _parameter.defaultValue = (parameter.initializer as any).text || null
+                        }
                     }
                     member.signature.parameters.push(_parameter)
                 }
@@ -286,7 +297,7 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
 }
 
 
-const mapType = (node: any) => {
+const mapType = (node: any): any => {
     switch (node.kind) {
         case SyntaxKind.TypeReference:
             return node.typeName.escapedText
@@ -305,8 +316,11 @@ const mapType = (node: any) => {
             return "symbol"
         case SyntaxKind.UnknownKeyword:
             return "unknown"
+        case SyntaxKind.ArrayType:
+            return `${mapType(node.elementType)}[]`
+            // return "[]"
         default:
-            return ""
+            return null
     }
 }
 
@@ -331,7 +345,7 @@ if (configPath) {
                 symbol.exports.forEach(exported => {
                     if (exported.flags & SymbolFlags.Alias) {
                         const aliasedSymbol = checker.getAliasedSymbol(exported)
-                        // console.log(aliasedSymbol)
+                        // console.log(aliasedSymbol.declarations)
                         const node = aliasedSymbol.valueDeclaration || aliasedSymbol.declarations[0]
 
                         members.push(walk2(checker, node, aliasedSymbol))
