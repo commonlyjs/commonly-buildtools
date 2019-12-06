@@ -84,11 +84,11 @@ const host: ParseConfigFileHost = {
 
 
 const walk3 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
-    console.log(SyntaxKind[node.kind])
+    // console.log(SyntaxKind[node.kind])
 }
 
-const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
-    // console.log(node)
+const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
+    // console.log(node.kind)
     const member: any = {
         name: null,
         since: null,
@@ -111,6 +111,7 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
 
     switch (node.kind) {
         case SyntaxKind.TypeAliasDeclaration:
+        case SyntaxKind.VariableStatement:
         case SyntaxKind.VariableDeclaration: {
             const thisNode = node as VariableDeclaration
             member.name = thisNode.name.getText()
@@ -288,9 +289,39 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
 
             break
         }
-        default:
+        default: {
             // console.log(SyntaxKind[node.kind])
-            break
+            // console.log((node as any).expression.expression.expression.flowNode.node)
+            // const nodex = (node as any).expression.expression.expression.flowNode.node
+            // const aliasedSymbol = checker.getAliasedSymbol(nodex.symbol)
+            // console.log(aliasedSymbol)
+            // walk2(checker, (node as any).expression.expression.expression.flowNode.node, aliasedSymbol)
+            // console.log(checker.getRootSymbols((node as any).expression.expression.expression.flowNode.node.symbol))
+            // checker.
+
+            // checker.getAliasedSymbol()
+
+            // console.log((node as any).parent.statements[1])
+
+            const target = (node as any).expression.expression.expression.flowNode.node.name.escapedText
+            // console.log(target)
+            const parenty = (node as any).parent
+
+            // const ss = checker.getSymbolAtLocation((node as any).parent)
+            const aliasedSymbol = parenty.locals.get(target)
+            // console.log(aliasedSymbol.valueDeclaration)
+
+            return walk2(checker, aliasedSymbol.valueDeclaration, aliasedSymbol)
+
+            // const nodey = parenty.locals.get("subtract").declarations[0]
+            // const statementy = parenty.statements[1]
+            // if (nodey) {
+            //     // walk2(checker, nodey, statementy)
+            //     console.log(statementy.getDocumentationComment(checker))
+            // }
+
+            // break
+        }
     }
 
     return member
@@ -342,14 +373,15 @@ if (configPath) {
             const symbol = checker.getSymbolAtLocation(mainFile)
             if (symbol && symbol.exports) {
                 const members: Member[] = [];
+                // console.log(symbol)
                 symbol.exports.forEach(exported => {
                     if (exported.flags & SymbolFlags.Alias) {
                         const aliasedSymbol = checker.getAliasedSymbol(exported)
-                        // console.log(aliasedSymbol.declarations)
                         const node = aliasedSymbol.valueDeclaration || aliasedSymbol.declarations[0]
 
+                        // console.log(aliasedSymbol)
                         members.push(walk2(checker, node, aliasedSymbol))
-
+                        // console.log(aliasedSymbol.getDocumentationComment(checker))
                     }
                 })
                 const dir = path.join(process.cwd(), outDir)
