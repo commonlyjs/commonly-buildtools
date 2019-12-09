@@ -116,7 +116,9 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
             const thisNode = node as VariableDeclaration
             member.name = thisNode.name.getText()
             member.description = symbol.getDocumentationComment(checker)[0].text
-                .replace("\r\n", " ")
+                .replace(/(\r\n){2}/g, "\r")
+                .replace(/\r\n( {2})?/g, " ")
+                .replace(/\r\n/g, "")
                 .replace("  ", "\r")
 
             if (thisNode.initializer && thisNode.initializer.kind === SyntaxKind.ArrowFunction) {
