@@ -305,7 +305,19 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
 
             // console.log((node as any).parent.statements[1])
 
-            const target = (node as any).expression.expression.expression.flowNode.node.name.escapedText
+            // let obj = (node as any).expression.expression
+            // while (obj.expression && !obj.expression.flowNode) {
+            //     console.log(obj)
+            //     obj = obj.expression
+            // }
+            
+            let _expression = (node as any).expression
+            while (_expression.expression) {
+                _expression = _expression.expression
+            }
+            let _flowNode = _expression.flowNode
+
+            const target = _flowNode.node.name.escapedText
             // console.log(target)
             const parenty = (node as any).parent
 
