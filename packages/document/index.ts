@@ -88,7 +88,7 @@ const walk3 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
 }
 
 const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
-    const fileName = (node.parent.parent.parent as any).fileName.substr(process.cwd().length)
+
     const member: any = {
         name: null,
         since: null,
@@ -103,8 +103,8 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
         },
         examples: [],
         metadata: {
-            source: `${path.basename(fileName, ".ts")}.ts`,
-            specification: `${path.basename(fileName, ".ts")}.spec.ts`
+            source: null,
+            specification: null
         },
     }
     // const dictionary = []
@@ -113,6 +113,15 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
         case SyntaxKind.TypeAliasDeclaration:
         case SyntaxKind.VariableStatement:
         case SyntaxKind.VariableDeclaration: {
+            let parent = node.parent
+            while (parent.parent != null) {
+                parent = parent.parent
+            }
+            const fileName = (parent as any).fileName.substr(process.cwd().length)
+            member.metadata = {
+                source: fileName,
+                specification: `${fileName.substr(0, fileName.length - 3)}.spec.ts`
+            }
             const thisNode = node as VariableDeclaration
             member.name = thisNode.name.getText()
             member.description = symbol.getDocumentationComment(checker)[0].text
