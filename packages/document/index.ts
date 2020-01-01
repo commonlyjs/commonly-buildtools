@@ -88,7 +88,7 @@ const walk3 = (checker: TypeChecker, node: Node, symbol: Symbol) => {
 }
 
 const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
-    // console.log(node.kind)
+    const fileName = (node.parent.parent.parent as any).fileName.substr(process.cwd().length)
     const member: any = {
         name: null,
         since: null,
@@ -103,8 +103,8 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
         },
         examples: [],
         metadata: {
-            source: null,
-            specification: null
+            source: fileName,
+            specification: `${path.basename(fileName, ".ts")}.spec.ts`
         },
     }
     // const dictionary = []
