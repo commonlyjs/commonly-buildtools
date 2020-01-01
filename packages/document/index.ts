@@ -103,7 +103,7 @@ const walk2 = (checker: TypeChecker, node: Node, symbol: Symbol): any => {
         },
         examples: [],
         metadata: {
-            source: fileName,
+            source: `${path.basename(fileName, ".ts")}.ts`,
             specification: `${path.basename(fileName, ".ts")}.spec.ts`
         },
     }
